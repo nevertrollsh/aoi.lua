@@ -99,7 +99,7 @@ end
 
 function aoi.hasFunctions(a)
     local hasfuncs = false
-    string.gsub(a, "%$(%w+)%(.-%)$", function(daf)
+    string.gsub(a, "%$(%w+)%(.-%).-$", function(daf)
         if aoi.functions[daf] then
             hasfuncs = true
         end
@@ -120,7 +120,7 @@ function aoi.parse(cnt)
         tokens[index] = string.gsub(content, "%$(%w+)%((.-)%)$", function(func, incontent)
             
             if aoi.functions[func] then
-                output = aoi.functions[func].code(aoi.parse(aoi.hasFunctions(incontent) and aoi.parse(incontent) or incontent))
+                output = aoi.functions[func].code(aoi.hasFunctions(incontent) and aoi.parse(incontent) or incontent)
             else
                 output = "$" ..func.. "(" .. (aoi.hasFunctions(incontent) and aoi.parse(incontent) or incontent) .. ")"
             end
@@ -150,6 +150,7 @@ end
 
 function aoi.getFiles(directory)
     local filesTable = {}
+    -- Updating this to LFS later on.
     local files = io.popen('find "' .. directory .. '" -type f -name "*.lua"'):lines()
     for file in files do
         table.insert(filesTable, file)
@@ -157,7 +158,7 @@ function aoi.getFiles(directory)
         return filesTable
 end
 
-function aoi.fetchFunctions(dir)
+function aoi.loadFunctions(dir)
     local files = aoi.getFiles(dir)
     local funcs = {}
     for index, file in pairs(files) do
