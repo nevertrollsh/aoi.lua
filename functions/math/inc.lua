@@ -1,6 +1,4 @@
-local aoi = require("aoi")
-
-return aoi.newFunction({
+return {
     name = "inc",
     code = function(n)
         local numn = tonumber(n)
@@ -10,4 +8,4 @@ return aoi.newFunction({
         newn = tostring(numn)
         return newn
     end
-})
+}
