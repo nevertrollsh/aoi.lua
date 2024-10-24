@@ -1,6 +1,5 @@
-local aoi = require("aoi")
 
-return aoi.newFunction({
+return {
     name = "sum",
     code = function(data)
         local function fixn(str)
@@ -19,4 +18,4 @@ return aoi.newFunction({
         
         return sums
     end
-})
+}
