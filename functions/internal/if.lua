@@ -1,6 +1,7 @@
-local aoi = require("aoi")
-
-function aoi.parseCondition(expr)
+return {
+    name = "if",
+    code = function(content)
+            function aoi.parseCondition(expr)
     local operators = {
         ["=="] = function(a, b) return a == b end,
         ["~="] = function(a, b) return a ~= b end,
@@ -26,11 +27,7 @@ function aoi.parseCondition(expr)
         end
     end
     return true
-end
-
-return aoi.newFunction({
-    name = "if",
-    code = function(content)
+            end
         local data = aoi.split(content)
         
         local condition, ifBlock, elseBlock = data[1], data[2], data[3]
@@ -43,4 +40,4 @@ return aoi.newFunction({
         
         return ""
     end
-})
+}
